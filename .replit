@@ -1,5 +1,5 @@
 entrypoint = "index.js"
-
+run = "nodemon index.js"
 hidden = [".config", "package-lock.json"]
 
 [interpreter]

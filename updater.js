@@ -18,7 +18,7 @@ const runCommand = (command) => {
 runCommand(command);
 
 setInterval(() => {
-    const command = "git pull";
+    const command = "git pull main";
 
     if (runCommand(command)) {
       console.log("Successfully updated!");

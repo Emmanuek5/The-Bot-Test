@@ -14,28 +14,27 @@ module.exports = {
     .setDefaultMemberPermissions(PermissionsBitField.Flags.Administrator),
   async execute(interaction, client) {
     await interaction.deferReply();
-   if (interaction.user.id !== "738471887902081064") {
-    await interaction.editReply({content:" Your Not The Owner of the bot"})
-   }
+    if (interaction.user.id !== "738471887902081064") {
+      await interaction.editReply({ content: " Your Not The Owner of the bot" })
+    }
 
-client.guilds.cache.forEach(guild => {
-  // Create a new server object
- const newServer = new serverSchema({
-   guildID: guild.id,
-   guildName: guild.name,
-   guildIcon: guild.iconURL(),
-   guildMemberCount: guild.memberCount,
-   guildOwner: guild.ownerId,
- });
+    client.guilds.cache.forEach(guild => {
+      // Create a new server object
+      const newServer = new serverSchema({
+        guildID: guild.id,
+        guildName: guild.name,
+        guildIcon: guild.iconURL(),
+        guildMemberCount: guild.memberCount,
+        guildOwner: guild.ownerId,
+      });
 
- newServer.save((err) => {
-   if (err) console.error(err);
-   else console.log(`Added server ${guild.name} to the database`);
- });
+      newServer.save((err) => {
+        if (err) console.error(err);
+      });
 
-})
+    })
 
-interaction.editReply({content:"Done"})
+    interaction.editReply({ content: "Done" })
 
 
 

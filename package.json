@@ -41,7 +41,7 @@
     "mongoose": "^6.8.2",
     "node-fetch": "^2.6.6",
     "node-spotify-api": "^1.1.1",
-    "nodemon": "^2.0.20",
+    "nodemon": "^2.0.21",
     "npm": "^9.2.0",
     "openai": "^3.1.0",
     "openapi": "^1.0.1",

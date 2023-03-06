@@ -1,3 +1,4 @@
+
 const {
   Client,
   GatewayIntentBits,
@@ -17,7 +18,7 @@ const leaveandjoinhandler = require("./src/events/leaveandjoinhandler");
 const mongoose = require("mongoose");
 const messagehand = require("./src/events/messagehandler.js");
 const client = new Client({
-   partials: [Partials.Channel,Partials.GuildMember,Partials.Message],
+  partials: [Partials.Channel, Partials.GuildMember, Partials.Message],
   intents: [
     GatewayIntentBits.DirectMessages,
     GatewayIntentBits.DirectMessageReactions,
@@ -50,19 +51,19 @@ if (process.env.TOKEN !== "undefined") {
   require("dotenv").config();
 }
 
-client.on("messageCreate",async (message) => {
-    if (message.author.bot || !message.guild) return;
+client.on("messageCreate", async (message) => {
+  if (message.author.bot || !message.guild) return;
   const user_id = message.author.id;
   // Check if the user has exceeded the rate limit
   if (last_used.has(user_id)) {
     const user_data = last_used.get(user_id);
     const current_time = Date.now();
     if (current_time - user_data.time < RATE_PERIOD * 1000) {
-    if(user_data.count == 2 ){
-      message.channel.send(`${message.author}, Slow Down Jeez. You Really Don't Need To Type This Fast.`)
-    }
+      if (user_data.count == 2) {
+        message.channel.send(`${message.author}, Slow Down Jeez. You Really Don't Need To Type This Fast.`)
+      }
       user_data.count++;
-      console.log( user_data.count)
+      console.log(user_data.count)
       if (user_data.count > RATE_LIMIT) {
         const mute_role = message.guild.roles.cache.find(role => role.name === 'Muted'); // Change this to the name of your muted role
         if (!mute_role) {
@@ -71,11 +72,11 @@ client.on("messageCreate",async (message) => {
         }
         const member = message.member;
 
-          if (member.permissions.has(PermissionsBitField.Flags.Administrator)) {
+        if (member.permissions.has(PermissionsBitField.Flags.Administrator)) {
           message.channel.send({ content: "I Can't Mute This User :sob:" });
           return;
         }
-      await member.timeout(5000 * 10 - 200 , "Spaming")
+        await member.timeout(5000 * 10 - 200, "Spaming")
         if (member.roles.cache.some(role => role.name === mute_role.name)) {
           return; // The user is already muted
         }
@@ -105,7 +106,7 @@ client.on("messageCreate",async (message) => {
 client.on("guildMemberAdd", (member) => {
 
   leaveandjoinhandler.join(client, member);
-  
+
 
 });
 

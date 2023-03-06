@@ -31,61 +31,6 @@ async function MessageCommands(client, command, args, message) {
   const path = require("path")
   console.log(command, args);
 
-if (command === "watchtogether") {
-  const {
-    createAudioResource,
-    joinVoiceChannel,
-    createAudioPlayer,
-    NoSubscriberBehavior,
-  } = require("@discordjs/voice");
-  const { MessageEmbed } = require("discord.js");
-  if (!args.length) {
-    return message.channel.send("Please provide a YouTube video URL");
-  }
-
-  const svoiceChannel = message.member.voice.channel;
-  if (!svoiceChannel) {
-    return message.channel.send("Please join a voice channel first");
-  }
-
-  const connection = await joinVoiceChannel({
-    channelId: svoiceChannel.id,
-    guildId: svoiceChannel.guild.id,
-    adapterCreator: svoiceChannel.guild.voiceAdapterCreator,
-  });
-  const audioResource = createAudioResource(
-    `https://ia801008.us.archive.org/26/items/alicemertonnoroots_201907/Alice%20Merton%20-%20No%20Roots.mp3`
-  );
-  const player = createAudioPlayer({
-    behaviors: {
-      noSubscriber: NoSubscriberBehavior.Pause,
-    },
-  });
-  console.log(player)
-
-  await player.play(audioResource);
-  await connection.subscribe(player);
-  const embed = new EmbedBuilder()
-    .setColor("#ff0000")
-    .setTitle("YouTube Watch Together")
-    .setDescription(`Starting a new YouTube Watch Together session`)
-    .addFields({
-      name: "URL",
-      value: `https://www.youtube.com/watch?v=${args[0]}`,
-    });
-
-  channel.send({embeds : [embed]})
-
-  player.on("error", (error) => {
-    console.error(error);
-  });
-
-  player.on("finish", () => {
-    voiceChannel.leave();
-    message.channel.send("Watch Together session ended");
-  });
-}
-
 
   switch (command) {
     case "ping":

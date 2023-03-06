@@ -49,7 +49,13 @@ async function messages(client, message) {
   const { guilds } = client;
   const { channels } = guilds;
   const fetch = require("fetch");
-
+if (content.startsWith(process.env.PREFIX)) {
+    const command = content.split(" ")[0].slice(process.env.PREFIX.length);
+    console.log(command);
+    const args = content.split(" ").slice(1);
+    MessageCommands(client, command, args, message);
+    return;
+  }
   const alias = "b";
 
   const messageoptions = {
@@ -73,7 +79,7 @@ async function messages(client, message) {
     const { Configuration, OpenAIApi } = require("openai");
 
     const configureration = new Configuration({
-      apiKey: "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",
+      apiKey: process.env.KEY,
     });
 
     const openai = new OpenAIApi(configureration);
@@ -133,13 +139,7 @@ async function messages(client, message) {
     return;
   }
 
-  if (content.startsWith(process.env.PREFIX)) {
-    const command = content.split(" ")[0].slice(process.env.PREFIX.length);
-    console.log(command);
-    const args = content.split(" ").slice(1);
-    MessageCommands(client, command, args, message);
-    return;
-  }
+  
 
   if (message.content.length > 3 && !findSwearWords(message)) {
     const random = Math.floor(Math.random() * 100) + 1;
